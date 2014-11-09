@@ -7,29 +7,48 @@ module.exports = function(config) {
     basePath: '',
 
     // testing framework to use (jasmine/mocha/qunit/...)
-    frameworks: ['jasmine'],
+    frameworks: ['jasmine','requirejs','express-http-server'],
 
     // list of files / patterns to load in the browser
     files: [
+      //modules loaded
+      //'node_modules/requirejs/require.js',
+      //'node_modules/express/index.js',
+      //files to test    
       'server/**/*.js',  
       //TESTING FILES
-      'test/*.js'
+      'test/practice.spec.js'
     ],
 
     // list of files / patterns to exclude
-    exclude: [],
+    exclude: [
+    ],
+
+    logger: [{tpye:'console'}],
+
+    reporter: ['progress'],
 
     // web server port
-    port: 8080,
+    port: 9876,
 
     // level of logging
     // possible values: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
-    logLevel: config.LOG_ERROR,
+    logLevel: config.LOG_DEBUG,
 
 
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: true,
+    autoWatch: false,
 
+    // preprocessors: {
+    //     'server/**/*.js' : ['coverage']
+    // },
+
+    coverageReporter: {
+        type: 'html',
+        dir: 'results/coverage/'
+    },
+
+    caputerTimeout: 20000,
 
     // Start these browsers, currently available:
     // - Chrome
@@ -39,11 +58,21 @@ module.exports = function(config) {
     // - Safari (only Mac)
     // - PhantomJS
     // - IE (only Windows)
-    browsers: ['Chrome'],
+    browsers: ['PhantomJS'],
 
+    reportSlowerThan: 500,
 
     // Continuous Integration mode
     // if true, it capture browsers, run tests and exit
-    singleRun: true
+    singleRun: true,
+
+    plugins: [
+      'karma-requirejs',
+      'karma-coverage',
+      'karma-jasmine',
+      'karma-phantomjs-launcher',
+      'karma-chrome-launcher',
+      'karma-express-http-server'
+    ]
   });
 };
