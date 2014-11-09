@@ -4,8 +4,8 @@
   "devDependencies": {
     "gulp": "^3.8.10",
     "gulp-jsdoc": "^0.1.4",
-    "pg": "^3.6.2",
     "gulp-jasmine": "^1.0.1",
+    "pg": "^3.6.2",
     "require": "^2.4.17"
   },
   "dependencies": {
