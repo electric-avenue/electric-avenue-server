@@ -90,3 +90,4 @@ sequelize
        console.log('It worked!')
      }
   })
+ module.exports = sequelize; 
