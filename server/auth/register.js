@@ -1,3 +1,6 @@
+/*jslint node: true */
+/* jshint -W098 */
+
 var sequelize = require('../db/db').sequelize;
 var helpers = require('./helpers');
 

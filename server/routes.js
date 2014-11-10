@@ -1,3 +1,6 @@
+/*jslint node: true */
+/* jshint -W098 */
+
 var helpers = require('./main/helpers');
 var api = require('./api/api');
 var auth = require('./auth/auth');

@@ -1,3 +1,4 @@
+/*jslint node: true */
 var Sequelize = require('sequelize');
 var sequelize = exports.sequelize = new Sequelize('tipzip', 'df', 'myPassword', {
   dialect: "postgres", 
@@ -8,11 +9,11 @@ sequelize
   .authenticate()
   .complete(function(err) {
     if (!!err) {
-      console.log('Unable to connect to the database:', err)
+      console.log('Unable to connect to the database:', err);
     } else {
-      console.log('Connection has been established successfully.')
+      console.log('Connection has been established successfully.');
     }
-  })
+  });
 
 
 //Define Models
@@ -70,7 +71,7 @@ Rating.belongsTo(User);
 //Type Model
 var Type = exports.Type = sequelize.define('Type', {
   type: Sequelize.STRING,
-})
+});
 
 //Type is N:M with Users and with Vendors
 Type.hasMany(User);
@@ -85,9 +86,9 @@ sequelize
   .sync({ force: true })
   .complete(function(err) {
      if (!!err) {
-       console.log('An error occurred while creating the table:', err)
+       console.log('An error occurred while creating the table:', err);
      } else {
-       console.log('It worked!')
+       console.log('It worked!');
      }
-  })
+  });
  module.exports = sequelize; 
