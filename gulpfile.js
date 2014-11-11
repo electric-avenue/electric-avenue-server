@@ -41,3 +41,4 @@ gulp.task('develop', function(){
 
 gulp.task('default', ['lint','develop']);
 
+gulp.task('ci', ['lint','test',]);
