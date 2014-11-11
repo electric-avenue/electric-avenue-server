@@ -1,3 +1,4 @@
+/*jslint node: true */
 var LocalStrategy = require('passport-local').Strategy;
 var passport = require('passport');
 var helpers = require('./helpers');

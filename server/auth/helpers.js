@@ -1,10 +1,11 @@
+/*jslint node: true */
 /**
 * @module authHelpers
 */
 var sequelize = require('../db/db').sequelize;
 var User = require('../db/db').User;
 var bcrypt = require('bcrypt');
-var Promise = require('bluebird');
+var BPromise = require('bluebird');
 
 /**
 * Finds a user in the database based on username or email;
@@ -35,7 +36,7 @@ exports.findUser = function(user, callback) {
 */
 exports.checkPassword = function(user, password) {
 
-  return new Promise(function(resolve) {
+  return new BPromise(function(resolve) {
     bcrypt.compare(password, user.password, function(err, result) {
       if (err) {
         console.log('bcrypt compare error:', err);
@@ -56,7 +57,7 @@ exports.checkPassword = function(user, password) {
 * @param {string} user.password Password of new user. Will be hashed before storage.
 */
 exports.generateUser = function(user) {
-  return new Promise(function(resolve) {
+  return new BPromise(function(resolve) {
     bcrypt.hash(user.password, 10, function(err, hash) {
       User.build({
         username: user.username,
