@@ -1,7 +1,7 @@
 /*jslint node: true */
 var Sequelize = require('sequelize');
 var config = require('../config/config.js');
-
+console.log(config.host);
 var sequelize = exports.sequelize = new Sequelize('tipzip', 'df', 'myPassword', {
   dialect: config.dialect, 
   host: config.host,
