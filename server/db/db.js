@@ -1,8 +1,11 @@
 /*jslint node: true */
 var Sequelize = require('sequelize');
+var config = require('../config/config.js');
+
 var sequelize = exports.sequelize = new Sequelize('tipzip', 'df', 'myPassword', {
-  dialect: "postgres", 
-  port: 5432
+  dialect: config.dialect, 
+  host: config.host,
+  port: config.db_port,
 });
 
 //Define Models
@@ -109,4 +112,3 @@ sequelize.sync({ force: true })
      console.log('It worked!');
    }
 });
-
