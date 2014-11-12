@@ -5,7 +5,7 @@ console.log(config.host);
 var sequelize = exports.sequelize = new Sequelize('tipzip', 'df', 'myPassword', {
   dialect: config.dialect, 
   host: config.host,
-  port: config.db_port,
+  port: config.db_port
 });
 
 //Define Models
