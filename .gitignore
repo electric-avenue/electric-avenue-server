@@ -2,4 +2,4 @@
 node_modules
 docs
 
-./server/config/config.js
+!./server/config/config.js
