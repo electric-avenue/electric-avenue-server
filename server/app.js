@@ -42,7 +42,11 @@ app.use(flash());
 
 app.use(bodyParser.json());  
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use('/', express.static(__dirname + '/../public'));
+// app.use('/', express.static(__dirname + '/../public'));
+// app.use('/', express.static(__dirname + '/../client'));
+// app.get('/', function(request, response) {
+  // response.send('we made it');
+// });
 /*
 * DEVELOPMENT ONLY - NOT NEEDED FOR IONIC BUILD
 */
