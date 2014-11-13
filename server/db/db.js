@@ -1,12 +1,21 @@
 /*jslint node: true */
 var Sequelize = require('sequelize');
 var config = require('../config/config.js');
-//var seedPedestrian = require('./seed/pedestrian/seedPedestrian').insertPedestrianVolume;
 
-var sequelize = exports.sequelize = new Sequelize('tipzip', 'df', 'myPassword', {
-  dialect: config.dialect, 
-  host: config.host,
-  port: config.db_port
+var is_native = false;
+var connectionString = config.dialect + '://' + config.username + ':' + config.password +
+'@' + config.host + ':5432/' + config.database;
+
+if (process.env.NODE_ENV){
+connection_string = process.env.DATABASE_URL;
+is_native = true;
+}
+
+var sequelize = exports.sequelize = new Sequelize(connectionString, {
+  logging: console.log,
+  logging: false,
+  protocol: 'postgres',
+  native: is_native
 });
 
 //Define Models
