@@ -2,20 +2,20 @@
 var Sequelize = require('sequelize');
 var config = require('../config/config.js');
 
-var is_native = false;
+var isNative = false;
 var connectionString = config.dialect + '://' + config.username + ':' + config.password +
 '@' + config.host + ':5432/' + config.database;
 
 if (process.env.NODE_ENV){
 connection_string = process.env.DATABASE_URL;
-is_native = true;
+isNative = true;
 }
 
 var sequelize = exports.sequelize = new Sequelize(connectionString, {
   logging: console.log,
   logging: false,
   protocol: 'postgres',
-  native: is_native
+  native: isNative
 });
 
 //Define Models
