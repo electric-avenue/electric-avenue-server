@@ -3,12 +3,15 @@ var Sequelize = require('sequelize');
 var config = require('../config/config.js');
 
 var isNative = false;
-var connectionString = config.dialect + '://' + config.username + ':' + config.password +
-'@' + config.host + ':5432/' + config.database;
+var connectionString = config.dialect + '://' 
+                     + config.username + ':' 
+                     + config.password 
+                     + '@' + config.host + ':5432/' 
+                     + config.database;
 
-if (process.env.NODE_ENV){
-connection_string = process.env.DATABASE_URL;
-isNative = true;
+if(process.env.NODE_ENV){
+  connection_string = process.env.DATABASE_URL;
+  isNative = true;
 }
 
 var sequelize = exports.sequelize = new Sequelize(connectionString, {
