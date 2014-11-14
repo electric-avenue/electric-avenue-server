@@ -43,4 +43,4 @@ var insertPedestrianVolume = exports.insertPedestrianVolume = function(pedVolume
   });
 };
 
-setTimeout(insertPedestrianVolume, 5000);
+setTimeout(insertPedestrianVolume, 20000);
