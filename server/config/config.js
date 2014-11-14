@@ -7,4 +7,5 @@ module.exports = {
   host: process.env.DATABASE_URL ||'localhost',
   db_port: 5432,
   dialect: 'postgres', //obviously you don't have to use PostgreSQL
-  native: true};
+  native: true
+};
