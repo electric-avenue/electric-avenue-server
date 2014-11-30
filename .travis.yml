@@ -1,9 +1,29 @@
+before_script: 
+- npm install -g gulp
+- psql -c 'create database tipzip;' -U postgres
+- psql -U postgres -c 'create extension postgis;'
+notifications: 
+node_js: 
+- "0.11"
+- "0.10"
+after_script: 
+- npm install heroku
+- git remote add heroku git@heroku.com:tipzipserver.git
+- echo "Host heroku.com" >> ~/.ssh/config
+- echo " StrictHostKeyChecking no" >> ~/.ssh/config
+- echo " CheckHostIP no" >> ~/.ssh/config
+- echo " UserKnownHostsFile=/dev/null" >> ~/.ssh/config
+- wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+- yes | heroku keys:add
+- yes | git push heroku master
+#recipients: 
+#- terrildouglas@gmail.com
+on_failure: always
 language: node_js
-node_js:
-  - "0.11"
-  - "0.10"
-before_script:
-  - npm install -g gulp
-  - psql -c 'create database tipzip;' -U postgres
-  - psql -U postgres -c 'create extension postgis;'
-script: gulp ci
+deploy: 
+  app: tipzipserver
+  provider: heroku
+  api_key: 
+    secure: jg0xIcS0/FCLwi0H07W36uPDH54v5ytBR+ORPHcovZDETYhnz1GzBhk5kKM4vIl7lUVYRehaT/f8/qlyiZzPE7E8DOBuu6E9CfAkVpwmHOoG/gqwvoIBKMtJ8dMQ3n/Ie2EbEykCcDjFSph/ZdnhKKVx20VHy7sTTo9bwC0tpZs=
+on_success: always
+email: terrildouglas@gmail.com

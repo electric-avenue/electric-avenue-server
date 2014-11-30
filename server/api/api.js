@@ -290,3 +290,10 @@ exports.getAllPeds = function(req, res) {
     return;
   })
 };
+
+exports.getDistance = function(req,res){
+  helpers.calcDistance(req.body.userID,req.body.vendorID,function(distance){
+    res.json({success:true, result:"Distance info received", data: distance});
+    return;
+  })
+}

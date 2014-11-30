@@ -119,6 +119,7 @@ exports.findOne = function(user, callback) {
 exports.findAll = function(callback) {
   Vendor.findAll({
     attributes: [
+      'id',
       'image',
       'description',
       'status',
@@ -213,7 +214,7 @@ var vendorsNearUsers = function(UserId, miles, callback) {
 };
 
 //Calculate Distance between User and Vendor. Applies callback to distance (in miles).
-var calcDistance = function(UserId, VendorId, callback) {
+exports.calcDistance = function(UserId, VendorId, callback) {
   var qstring = 'WITH userlon AS (SELECT longitude FROM "Users" WHERE id='+UserId+'), userlat AS (SELECT latitude FROM "Users" WHERE id='+UserId+'), vendorlon AS (SELECT longitude FROM "Vendors" WHERE id='+VendorId+'), vendorlat AS (SELECT latitude FROM "Vendors" WHERE id='+VendorId+') SELECT ST_Distance(ST_GeographyFromText(' + "'POINT(' || userlon.longitude || ' ' || userlat.latitude ||')'), ST_GeographyFromText('POINT(' || vendorlon.longitude || ' ' || vendorlat.latitude ||')')) FROM userlon, userlat, vendorlon, vendorlat";
   sequelize.query(qstring)
   .success(function(distance) {
