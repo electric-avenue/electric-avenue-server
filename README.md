@@ -8,6 +8,9 @@ Vendors manage an in-app home page viewable by users that contains information a
 TEAM BREAKDOWN
 --------------
 Mike Horan: Project Manager, Back End, Algorithms & Leaflet Maps
+
 Jamon Douglas:  DevOps & Full Stack
+
 Richard Avendaño: Full Stack
+
 Rishi Goomar: Front-End, UI/UX
