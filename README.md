@@ -1,4 +1,4 @@
-ELECTRIC AVENUE: Node.js Server & SQL Database
+ELECTRIC AVENUE: Server & Database
 --------------
 Electric Avenue is a single-platform solution for connecting people to street vendors. Examples of these types of vendors includes artists, musicians, performers, food vendors/food trucks, pop-up sellers of goods and farmers market purveyors.
 Users are able to view vendors on a map or in a list and filter their search by various criteria, including vendor types, location, rating, etc. Users can also seamlessly tip/pay vendors, rate vendors and receive recommendations based on their prior ratings.
