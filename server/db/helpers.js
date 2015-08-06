@@ -101,8 +101,7 @@ exports.findOne = function(user, callback) {
         'status',
         'latitude',
         'longitude',
-        'createdAt',
-        'category'
+        'createdAt'
       ]
     }
   }).then(callback);
@@ -125,8 +124,7 @@ exports.findAll = function(callback, user) {
       'status',
       'latitude',
       'longitude',
-      'createdAt',
-      'category'
+      'createdAt'
     ],
     include: [
       {
@@ -162,12 +160,8 @@ exports.findAllByType = function(params, callback) {
       'status',
       'latitude',
       'longitude',
-      'createdAt',
-      'category'
+      'createdAt'
     ],
-    where: {
-      category: params.category
-    },
     include: [
       {
         model: User,

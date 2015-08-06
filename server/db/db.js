@@ -44,7 +44,7 @@ var sequelize = new Sequelize(connectionString, {
 * ==== DB SCHEMAS ====
 */ 
 sequelize.authenticate()
-.complete(function(err) {
+.then(function(err) {
   if (err) {
     console.log('Unable to connect to the database:', err);
     return;
@@ -61,19 +61,19 @@ var User = sequelize.define('User', {
   email: Sequelize.STRING,
   zipcode: Sequelize.FLOAT,
   age: Sequelize.INTEGER,
-  latitude: {
-    type: Sequelize.FLOAT,
-    defaultValue: 43.645016
-  },
-  longitude: {
-    type: Sequelize.FLOAT,
-    defaultValue: -79.39092
-  },
+  // latitude: {
+  //   type: Sequelize.FLOAT,
+  //   defaultValue: 43.645016
+  // },
+  // longitude: {
+  //   type: Sequelize.FLOAT,
+  //   defaultValue: -79.39092
+  // },
   displayname: Sequelize.STRING,
   firstname: Sequelize.STRING,
   middlename: Sequelize.STRING,
   lastname: Sequelize.STRING,
-  stripe: Sequelize.STRING
+  // stripe: Sequelize.STRING
 });
 
 /*
@@ -97,11 +97,12 @@ var Vendor = sequelize.define('Vendor', {
   longitude: {
     type: Sequelize.FLOAT,
     defaultValue: -79.39092
-  },
-  category: {
-    type: Sequelize.STRING,
-    defaultValue: "Food"
   }
+  // ,
+  // category: {
+  //   type: Sequelize.STRING,
+  //   defaultValue: "Food"
+  // }
 });
 
 User.hasOne(Vendor);
@@ -159,9 +160,9 @@ var Pedestrian = sequelize.define('pedestrianvolume',{
 * "force: true" removes existing tables and re-create them
 */
 sequelize.sync({ force: false })
-.complete(function(err) {
+.then(function(err) {
    if (err) {
-     console.log('An error occurred while creating the table:', err);
+     // console.log('An error occurred while creating the table:', err);
      return;
    } 
    console.log('It worked!');
@@ -170,7 +171,7 @@ sequelize.sync({ force: false })
 /*
 * Clean Up Ratings Table By Removing Duplicate Reviews (Caused by Data Seeding)
 */
-sequelize.query('DELETE FROM "Ratings" WHERE id NOT IN (SELECT MIN(id) FROM "Ratings" GROUP BY "UserId", "VendorId")').success(function(result) {
+sequelize.query('DELETE FROM "Ratings" WHERE id NOT IN (SELECT MIN(id) FROM "Ratings" GROUP BY "UserId", "VendorId")').then(function(result) {
   console.log('Duplicate Reviews Deleted!');
 });
 

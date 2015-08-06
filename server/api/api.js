@@ -139,6 +139,7 @@ exports.getAll = function(req, res) {
   var params = _.pick(req.body, [
     'category'
   ]);
+  
   helpers.findUser({username: req.user}, function(user) {
     if (params.category) {
       helpers.findAllByType(params, function(vendors) {

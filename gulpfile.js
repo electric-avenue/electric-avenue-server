@@ -34,7 +34,7 @@ gulp.task('docs', function() {
 gulp.task('develop', function(){
   nodemon({script:'./server/app.js', ext: 'js',})
     // .on('change', ['lint'])
-    .on('change', ['develop'])
+    // .on('change', ['develop'])
     .on('restart', function(){
       console.log('restarted server!');
     })
