@@ -33,12 +33,14 @@ gulp.task('docs', function() {
 
 gulp.task('develop', function(){
   nodemon({script:'./server/app.js', ext: 'js',})
-    .on('change', ['lint'])
+    // .on('change', ['lint'])
+    .on('change', ['develop'])
     .on('restart', function(){
       console.log('restarted server!');
     })
 })
 
-gulp.task('default', ['lint','develop']);
+// gulp.task('default', ['lint','develop']);
+gulp.task('default', ['develop']);
 
 gulp.task('ci', ['lint','test',]);
