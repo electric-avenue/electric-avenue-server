@@ -174,6 +174,7 @@ exports.findAllByType = function(params, callback) {
     ]
   }).then(function(vendors) {
     vendors = vendors.map(function(val, index) {
+      //randomize ratings
       val.dataValues.avgrating = val.Ratings.reduce(function(mem, val, i, col) {
         mem += val.rating;
         if (i === col.length - 1) {
@@ -183,7 +184,9 @@ exports.findAllByType = function(params, callback) {
       }, 0);
       return val;
     });
-    callback(vendors)
+    console.log('vendor after some processing', params);
+    //set a filter here 
+    callback(vendors);
   });
 };
 
@@ -263,10 +266,10 @@ var addVendor = function(UserId, latitude, longitude, totaltip, image, descripti
 
 exports.getAllPeds = function(callback) {
   Pedestrian.findAll()
-  .success(function(result) {
+  .then(function(result) {
     callback(result);
-  })
-}
+  });
+};
 
 //Seed Data for Testing PostGIS Functions
 // setTimeout(addUser.bind(this, 'test', 'test', 'test', 43.645016, -79.39092), 5000);
