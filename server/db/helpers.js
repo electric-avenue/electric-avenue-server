@@ -10,6 +10,8 @@ var Rating = require('./db').Rating;
 var Vendor = require('./db').Vendor;
 var Pedestrian = require('./db').Pedestrian;
 var Tip = require('./db').Tip;
+var TypesVendors = require('./db').TypesVendors;
+var Type = require('./db').Type;
 
 
 /**
@@ -91,7 +93,10 @@ exports.findOne = function(user, callback) {
     where: sequelize.or({ username: username }, { email: email }),
     attributes: [
       'username',
-      'displayname'
+      'displayname',
+      'firstname',
+      'middlename',
+      'lastname'
     ],
     include: {
       model: Vendor, 
@@ -132,6 +137,9 @@ exports.findAll = function(callback, user) {
         attributes: [
           'username',
           'displayname',
+          'firstname',
+          'middlename',
+          'lastname'
         ]
       },
       Rating
@@ -155,6 +163,7 @@ exports.findAll = function(callback, user) {
 exports.findAllByType = function(params, callback) {
   Vendor.findAll({
     attributes: [
+      'id',
       'image',
       'description',
       'status',
@@ -162,12 +171,15 @@ exports.findAllByType = function(params, callback) {
       'longitude',
       'createdAt'
     ],
-    include: [
+   include: [
       {
         model: User,
         attributes: [
           'username',
           'displayname',
+          'firstname',
+          'middlename',
+          'lastname'
         ]
       },
       Rating
@@ -184,9 +196,19 @@ exports.findAllByType = function(params, callback) {
       }, 0);
       return val;
     });
-    console.log('vendor after some processing', params);
+    var filterVendors = vendors.filter(function(val, index, list){
+      var category = params.category[0];
+      var indexOfCategory = val.User.dataValues.username.indexOf(category);
+
+      return indexOfCategory > -1;
+    });
+    
     //set a filter here 
-    callback(vendors);
+    callback(filterVendors);
+  })
+  .catch(function (err){
+    console.log(err.stack);
+    callback({});
   });
 };
 
@@ -215,15 +237,17 @@ var vendorsNearUsers = function(UserId, miles, callback) {
 exports.calcDistance = function(UserId, VendorId, callback) {
   var qstring = 'WITH userlon AS (SELECT longitude FROM "Users" WHERE id='+UserId+'), userlat AS (SELECT latitude FROM "Users" WHERE id='+UserId+'), vendorlon AS (SELECT longitude FROM "Vendors" WHERE id='+VendorId+'), vendorlat AS (SELECT latitude FROM "Vendors" WHERE id='+VendorId+') SELECT ST_Distance(ST_GeographyFromText(' + "'POINT(' || userlon.longitude || ' ' || userlat.latitude ||')'), ST_GeographyFromText('POINT(' || vendorlon.longitude || ' ' || vendorlat.latitude ||')')) FROM userlon, userlat, vendorlon, vendorlat";
   sequelize.query(qstring)
-  .success(function(distance) {
+  .then(function(distance) {
     // console.log('User distance from Vendor in Meters: ', distance[0].st_distance)
     var distance = Number(distance[0].st_distance) * 0.00062137;
     // console.log('User distance from Vendor in Miles: ', distance);
     if (callback) {
       callback(distance);
     }
-  })
-}
+  }).catch(function(err){
+    console.log(err.stack);
+  });
+};
 
 
 

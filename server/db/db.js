@@ -29,12 +29,12 @@ var connectionString = config.dialect + '://'
                      + config.database;
 
 if (process.env.NODE_ENV) {
-  connection_string = process.env.DATABASE_URL;
+  connectionString = process.env.DATABASE_URL;
   isNative = true;
 }
 
 var sequelize = new Sequelize(connectionString, {
-  logging: console.log,
+  // logging: console.log,
   logging: true,
   protocol: 'postgres',
   native: isNative
@@ -89,18 +89,13 @@ var Vendor = sequelize.define('Vendor', {
     type: Sequelize.FLOAT,
     defaultValue: -79.39092
   }
-  // ,
-  // category: {
-  //   type: Sequelize.STRING,
-  //   defaultValue: "Food"
-  // }
 });
 
-User.hasOne(Vendor);
+User.hasMany(Vendor);
 Vendor.belongsTo(User);
 
-User.hasMany(Vendor);
-Vendor.hasMany(User);
+// User.hasMany(Vendor);
+// Vendor.hasMany(User);
 
 /*
 * ==== TIP MODEL ==== 
@@ -109,10 +104,6 @@ var Tip = sequelize.define('Tip', {
   amount: Sequelize.DECIMAL,
   latitude: Sequelize.FLOAT,
   longitude: Sequelize.FLOAT,
-  paid: {
-    type: Sequelize.BOOLEAN,
-    defaultValue: false
-  }
 });
 
 User.hasMany(Tip);
@@ -132,6 +123,43 @@ Vendor.hasMany(Rating);
 Rating.belongsTo(Vendor);
 User.hasMany(Rating);
 Rating.belongsTo(User);
+
+
+// Type Model
+var Type = exports.Type = sequelize.define('Type', {
+  type: Sequelize.STRING
+});
+
+var TypesVendors = exports.TypesVendors = sequelize.define('TypesVendor', {});
+
+
+
+// Type.hasMany(TypesVendors);
+// TypesVendors.belongsToMany(Type);
+
+// Vendor.hasMany(TypesVendors);
+// TypesVendors.belongsToMany(Vendor);
+Vendor.belongsToMany( Type , {through : 'TypesVendors', foreignKey : 'TypeId'});
+Type.belongsToMany( Vendor, {through : 'TypesVendors', foreignKey : 'VendorId'});
+
+
+
+// Type is N:M with Users and with Vendors
+var TypesUsers  = sequelize.define('TypesUser', {});
+Type.belongsTo(User, {through: TypesUsers});
+User.hasMany(Type, {through: TypesUsers});
+
+// Type.belongsToMany(Vendor, {through: TypesVendors});
+// Vendor.hasMany(Type, {as: 'category', through: TypesVendors});
+
+// Vendor Group Model
+var Group  = sequelize.define('Group', {
+  groupname: Sequelize.STRING
+});
+
+// Group has multiple Vendors
+Group.belongsTo(Vendor);
+Vendor.hasMany(Group);
 
 
 /*
@@ -170,10 +198,12 @@ sequelize.query('DELETE FROM "Ratings" WHERE id NOT IN (SELECT MIN(id) FROM "Rat
 * ==== EXPORTS ====
 */ 
 module.exports = {
-  sequelize: sequelize,
-  User: User,
-  Vendor: Vendor, 
-  Tip: Tip,
-  Rating: Rating,
-  Pedestrian: Pedestrian
+  sequelize    : sequelize,
+  User         : User,
+  Vendor       : Vendor, 
+  Tip          : Tip,
+  Rating       : Rating,
+  Pedestrian   : Pedestrian,
+  TypesVendors : TypesVendors,
+  Type         : Type
 };

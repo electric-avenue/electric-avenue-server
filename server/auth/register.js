@@ -28,7 +28,7 @@ var generateUser = function(user) {
         password: hash
       })
       .save()
-      .complete(function(err) {
+      .then(function(err) {
         resolve(err);
       });
     });
@@ -55,7 +55,7 @@ var changePassword = function(user, password) {
         if (result) {
           bcrypt.hash(password.newpw, 10, function(err, hash) {
             user.updateAttributes({password: hash})
-            .success(resolve);
+            .then(resolve);
           });
         } else {
           reject(result);
